@@ -3,8 +3,6 @@ import skimage
 from skimage import io
 import pandas as pd
 import numpy as np
-from scipy.io import savemat, loadmat
-import h5py
 
 class ImageLoader(object):
 	"""load train and test data"""
