@@ -60,10 +60,10 @@ class ImageLoader(object):
 		return np.load(os.path.join(self.folderpath, filename))
 
 	def get_test_data(self):
-		return self.test_data
+		return self.test_images
 
 	def get_train_data(self):
-		return self.train_data
+		return self.train_images
 
 
 def main():
