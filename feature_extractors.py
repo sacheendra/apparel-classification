@@ -45,12 +45,10 @@ class DimensionNormaliser(object):
 	"""make all images have same bumber of dimensions"""
 	def __init__(self, image_list):
 		super(DimensionNormaliser, self).__init__()
-
-		max_dimensions = max(image_list, key=lambda x: x.shape[0])
-		print max_dimensions
+		max_dimensions = max(image_list, key=lambda x: x.shape[0]).shape[0]
 		self.feature_matrix = np.zeros(shape=(len(image_list), max_dimensions), dtype=np.float32)
 		for i in range(len(image_list)):
-			feature_matrix[i, :image_list[i].shape[0]] = image_list[i]
+			self.feature_matrix[i, :image_list[i].shape[0]] = image_list[i]
 
 	def get_features(self):
 		return self.feature_matrix
@@ -62,7 +60,7 @@ def main():
 	print(len(surf_features))
 	print(surf_features[0].shape)
 	dim_normalised_surf_features = DimensionNormaliser(surf_features).get_features()
-	print(dim_normalised_surf_features)
+	print(dim_normalised_surf_features.shape)
 	# hog_features = HOGExtractor(train_data).get_features()
 	# print(len(hog_features))
 	# print(hog_features[0].shape)
