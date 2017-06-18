@@ -63,7 +63,7 @@ class ImageLoader(object):
 		return self.test_images
 
 	def get_train_data(self):
-		return self.train_data
+		return self.train_images
 
 
 def main():
