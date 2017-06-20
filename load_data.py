@@ -68,6 +68,9 @@ class ImageLoader(object):
 
 def main():
 	il = ImageLoader('fashion-data')
+	test_images = il.get_test_data()
+	print(len(test_images[0]), len(test_images[0][0]))
+	print(test_images[0][0])
 		
 if __name__ == '__main__':
 	main()
