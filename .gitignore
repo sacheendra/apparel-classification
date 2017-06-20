@@ -102,3 +102,5 @@ ENV/
 
 *.jpg
 fashion-data/
+
+.DS_Store

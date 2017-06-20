@@ -3,10 +3,7 @@ from skimage import color, exposure
 import cv2
 
 import load_data
-import self_similarity
 import matplotlib.pyplot as plt
-
-
 
 def ipynb_show_color_histogram(histogram, plot_title=''):
 	fig, ax = plt.subplots(figsize=(12, 1.5))
@@ -92,7 +89,7 @@ def run():
 
 	e = LABExtractor(test_images)
 	lab_features = e.get_features()
-	print(lab_features)
+	print(lab_features[0].shape)
 	print(np.shape(lab_features))
 
 if __name__ == '__main__':

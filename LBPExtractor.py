@@ -3,8 +3,6 @@ from skimage import color
 from skimage.feature import local_binary_pattern
 
 import load_data
-import self_similarity
-
 
 class LBPExtractor(object):
 	"""Extracts Local Binary Pattern descriptor 
@@ -27,7 +25,7 @@ def run():
 
 	e = LBPExtractor(test_images)
 	lbp_features = e.get_features()
-	print(lbp_features)
+	print(lbp_features[0].shape)
 	print(np.shape(lbp_features))
 
 if __name__ == '__main__':
