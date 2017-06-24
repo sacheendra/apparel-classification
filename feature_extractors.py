@@ -6,17 +6,27 @@ from skimage import data, color, exposure
 
 class SURFExtractor(object):
 	"""get SURF features"""
-	def __init__(self, image_list, hessian_threshold):
+	def __init__(self, image_list, hessian_threshold, step_size=10):
 		super(SURFExtractor, self).__init__()
 		surf = cv2.SURF(hessian_threshold)
 
-		self.surf_features = [np.ndarray(0)] * image_list.shape[0]
-		for i in range(len(image_list)):
-			dense = cv2.FeatureDetector_create("Dense")
-			kp = dense.detect(image_list[i])
-			(_, surf_descriptors) = surf.compute(image_list[i],kp)
+		self.keypoints = None
+		self.surf_features = None
+		for i in range(image_list.shape[0]):
+			gray = cv2.cvtColor(image_list[i][:][:][:], cv2.COLOR_BGR2GRAY)
 
-			self.surf_features[i] = surf_descriptors
+			if self.keypoints is None:
+				self.keypoints = ([cv2.KeyPoint(x, y, step_size) 
+									for y in range(0, gray.shape[0], step_size) 
+									for x in range(0, gray.shape[1], step_size)])
+
+			(kps, surf_descriptors) = surf.compute(image_list[i][:][:][:], self.keypoints)
+
+			if self.surf_features is None:
+				self.surf_features = np.zeros((image_list.shape[0], gray.shape[0]/step_size, gray.shape[1]/step_size, surf_descriptors.shape[1]), dtype=np.float32)
+
+			for j, kp in enumerate(kps):
+				self.surf_features[i][int(kp.pt[0]/step_size)][int(kp.pt[1]/step_size)][:] = surf_descriptors[j][:]
 
 	def get_features(self):
 		return self.surf_features
@@ -26,27 +36,19 @@ class HOGExtractor(object):
 	def __init__(self, image_list):
 		super(HOGExtractor, self).__init__()
 
-		self.hog_features = [np.ndarray(0)] * image_list.shape[0]
-		for i in range(len(image_list)):
+		self.hog_features = None
+		for i in range(image_list.shape[0]):
 			grayscale_image = color.rgb2gray(image_list[i])
 			hog_feature_array = hog(grayscale_image, block_norm='L2-Hys')
+			print(hog_feature_array.shape)
 
-			self.hog_features[i] = np.ndarray.flatten(hog_feature_array)
+			if self.hog_features is None:
+				self.hog_features = np.zeros((image_list.shape[0], hog_feature_array.shape[0], hog_feature_array.shape[1], hog_feature_array.shape[2]), dtype=np.float32)
+
+			self.hog_features[i][:][:][:] = hog_feature_array
 
 	def get_features(self):
 		return self.hog_features
-
-class DimensionNormaliser(object):
-	"""make all images have same bumber of dimensions"""
-	def __init__(self, image_list):
-		super(DimensionNormaliser, self).__init__()
-		max_dimensions = max(image_list, key=lambda x: x.shape[0]).shape[0]
-		self.feature_matrix = np.zeros(shape=(len(image_list), max_dimensions), dtype=np.float32)
-		for i in range(len(image_list)):
-			self.feature_matrix[i, :image_list[i].shape[0]] = image_list[i]
-
-	def get_features(self):
-		return self.feature_matrix
 
 def main():
 	loader = ImageLoader('fashion-data')

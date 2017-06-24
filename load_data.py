@@ -1,62 +1,63 @@
 import os
 import skimage
 from skimage import io
+from skimage import transform
 import pandas as pd
 import numpy as np
 
 class ImageLoader(object):
 	"""load train and test data"""
-	def __init__(self, folderpath, loadall=False):
+	def __init__(self, folderpath, train_images_per_category=100, test_images_per_category=10, num_categories=14):
 		super(ImageLoader, self).__init__()
-		testbinpath = 'test.npy'
-		trainbinpath = 'train.npy'
 		partialtestbinpath = 'partialtest.npy'
 		partialtrainbinpath = 'partialtrain.npy'
 
 		self.folderpath = folderpath
+		self.train_images_per_category = train_images_per_category
+		self.test_images_per_category = test_images_per_category
+		self.num_categories = num_categories
 
-		if ~loadall and os.path.isfile(os.path.join(folderpath, partialtestbinpath)):
-			(self.test_images, self.test_labels) = self.load_data(partialtestbinpath)
+		if os.path.isfile(os.path.join(folderpath, partialtestbinpath)):
+			(self.test_images, self.test_labels, _) = self.load_data(partialtestbinpath)
 			print "partial test data loaded from numpy file"
-		elif loadall and os.path.isfile(os.path.join(folderpath, testbinpath)):
-			(self.test_images, self.test_labels) = self.load_data(testbinpath)
-			print "test data loaded from numpy file"
-		elif ~loadall and os.path.isfile(os.path.join(folderpath, testbinpath)):
-			(all_test_images, all_test_labels) = self.load_data(testbinpath)
-			self.test_images = all_test_images[:100]
-			self.test_labels = all_test_labels[:100]
-			self.store_data((self.test_images, self.test_labels), partialtestbinpath)
 		else:
 			self.test_filenames = pd.read_csv(os.path.join(folderpath, 'test.txt'))
-			(self.test_images, self.test_labels) = self.load_images(self.test_filenames)
-			self.store_data((self.test_images, self.test_labels), testbinpath)
-			self.store_data((self.test_images[:100], self.test_labels[:100]), partialtestbinpath)
+			(self.test_images, self.test_labels) = self.load_images(self.test_filenames, test_images_per_category, num_categories)
+			# https://stackoverflow.com/questions/25552741/python-numpy-not-saving-array
+			# extra array of zeroes is a hack to make numpy save work.
+			self.store_data((self.test_images, self.test_labels, np.zeros(0)), partialtestbinpath)
+			print "partial test data loaded"
 
-		if ~loadall and os.path.isfile(os.path.join(folderpath, partialtrainbinpath)):
-			(self.train_images, self.train_labels) = self.load_data(partialtrainbinpath)
+		if os.path.isfile(os.path.join(folderpath, partialtrainbinpath)):
+			(self.train_images, self.train_labels, _) = self.load_data(partialtrainbinpath)
 			print "partial train data loaded from numpy file"
-		elif loadall and os.path.isfile(os.path.join(folderpath, trainbinpath)):
-			(self.train_images, self.train_labels) = self.load_data(trainbinpath)
-			print "train data loaded from numpy file"
-		elif ~loadall and os.path.isfile(os.path.join(folderpath, trainbinpath)):
-			(all_train_images, all_train_labels) = self.load_data(trainbinpath)
-			self.train_images = all_train_images[:500]
-			self.train_labels = all_train_labels[:500]
-			self.store_data((self.train_images, self.train_labels), partialtrainbinpath)
 		else:
 			self.train_filenames = pd.read_csv(os.path.join(folderpath, 'train.txt'))
-			(self.train_images, self.train_labels) = self.load_images(self.train_filenames)
-			self.store_data((self.train_images, self.train_labels), trainbinpath)
-			self.store_data((self.train_images[:500], self.train_labels[:500]), partialtrainbinpath)
+			(self.train_images, self.train_labels) = self.load_images(self.train_filenames,  train_images_per_category, num_categories)
+			self.store_data((self.train_images, self.train_labels, np.zeros(0)), partialtrainbinpath)
+			print "partial train data loaded"
 
-	def load_images(self, filenames):
-		images = [np.ndarray(np.ndarray(0))] * filenames.shape[0]
-		labels = np.zeros(filenames.shape[0], dtype=np.uint8)
+	def load_images(self, filenames, images_per_category, num_categories):
+		filenames_by_category = [[] for i in range(num_categories)]
 		for index, row in filenames.iterrows():
 			imagename = row.iloc[0]
-			images[index] = io.imread(
-				os.path.join(self.folderpath, 'images', imagename + '.jpg'))
-			labels[index] = imagename.split('/', 1)[0]
+			label = int(imagename.split('/', 1)[0])
+			if label < num_categories:
+				filenames_by_category[label].append(imagename)
+
+		images = np.zeros((images_per_category * num_categories, 320, 320, 3), dtype=np.uint8)
+		labels = np.zeros(images_per_category * num_categories, dtype=np.uint8)
+
+		for i, category in enumerate(filenames_by_category):
+			images_to_pick = np.random.randint(0, len(category), images_per_category)
+			count = 0
+			for imageindex in images_to_pick:
+				imagename = category[imageindex]
+				index_in_dataset = i*images_per_category + count
+				images[index_in_dataset][:][:][:] = transform.resize(io.imread(
+					os.path.join(self.folderpath, 'images', imagename + '.jpg')), (320, 320), mode='reflect')
+				labels[index_in_dataset] = i
+				count = count + 1
 		return (images, labels)
 
 	def store_data(self, data, filename):

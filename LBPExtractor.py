@@ -11,10 +11,10 @@ class LBPExtractor(object):
 		super(LBPExtractor, self).__init__()
 
 		self.lbp_features = [np.ndarray(0)] * images.shape[0]
-		for i in range(len(images)):
+		for i in range(images.shape[0]):
 			image = color.rgb2gray(images[i])
 			lbp_image = local_binary_pattern(image, 8, 2, method='uniform')
-			self.lbp_features[i] = np.ndarray.flatten(lbp_image)
+			self.lbp_features[i] = lbp_image
 
 	def get_features(self):
 		return self.lbp_features
