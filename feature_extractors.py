@@ -12,16 +12,11 @@ class SURFExtractor(object):
 
 		self.surf_features = [np.ndarray(0)] * image_list.shape[0]
 		for i in range(len(image_list)):
-			(surf_keypoints, surf_descriptors) = surf.detectAndCompute(image_list[i], None)
-			num_keypoints = len(surf_keypoints)
-			descriptor_size = surf_descriptors.shape[1]
-			surf_feature_array = np.ndarray(shape=(num_keypoints, descriptor_size + 2), dtype=np.float32)
-			for j in range(num_keypoints):
-				surf_feature_array[j, 0:descriptor_size] = surf_descriptors[j]
-				surf_feature_array[j, descriptor_size] = surf_keypoints[j].pt[0]
-				surf_feature_array[j, descriptor_size + 1] = surf_keypoints[j].pt[1]
+			dense = cv2.FeatureDetector_create("Dense")
+			kp = dense.detect(image_list[i])
+			(_, surf_descriptors) = surf.compute(image_list[i],kp)
 
-			self.surf_features[i] = np.ndarray.flatten(surf_feature_array)
+			self.surf_features[i] = surf_descriptors
 
 	def get_features(self):
 		return self.surf_features
@@ -58,9 +53,9 @@ def main():
 	train_data = loader.get_train_data()
 	surf_features = SURFExtractor(train_data, 400).get_features()
 	print(len(surf_features))
-	print(surf_features[0].shape)
-	dim_normalised_surf_features = DimensionNormaliser(surf_features).get_features()
-	print(dim_normalised_surf_features.shape)
+	print(surf_features[3].shape)
+	# dim_normalised_surf_features = DimensionNormaliser(surf_features).get_features()
+	# print(dim_normalised_surf_features.shape)
 	# hog_features = HOGExtractor(train_data).get_features()
 	# print(len(hog_features))
 	# print(hog_features[0].shape)
