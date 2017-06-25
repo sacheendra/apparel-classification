@@ -8,7 +8,11 @@ class SURFExtractor(object):
 	"""get SURF features"""
 	def __init__(self, image_list, hessian_threshold, step_size=10):
 		super(SURFExtractor, self).__init__()
-		surf = cv2.SURF(hessian_threshold)
+
+		if hasattr(cv2, 'SURF'):
+			surf = cv2.SURF(hessian_threshold)
+		else:
+			surf = cv2.xfeatures2d.SURF_create()
 
 		self.keypoints = None
 		self.surf_features = None
