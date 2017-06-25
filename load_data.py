@@ -1,7 +1,6 @@
 import os
 import skimage
-from skimage import io
-from skimage import transform
+from skimage import io, transform, img_as_ubyte
 import pandas as pd
 import numpy as np
 
@@ -25,7 +24,7 @@ class ImageLoader(object):
 			(self.test_images, self.test_labels) = self.load_images(self.test_filenames, test_images_per_category, num_categories)
 			# https://stackoverflow.com/questions/25552741/python-numpy-not-saving-array
 			# extra array of zeroes is a hack to make numpy save work.
-			self.store_data((self.test_images, self.test_labels, np.zeros(0)), partialtestbinpath)
+			self.store_data((self.test_images, self.test_labels, np.zeros(1)), partialtestbinpath)
 			print "partial test data loaded"
 
 		if os.path.isfile(os.path.join(folderpath, partialtrainbinpath)):
@@ -34,7 +33,7 @@ class ImageLoader(object):
 		else:
 			self.train_filenames = pd.read_csv(os.path.join(folderpath, 'train.txt'))
 			(self.train_images, self.train_labels) = self.load_images(self.train_filenames,  train_images_per_category, num_categories)
-			self.store_data((self.train_images, self.train_labels, np.zeros(0)), partialtrainbinpath)
+			self.store_data((self.train_images, self.train_labels, np.zeros(1)), partialtrainbinpath)
 			print "partial train data loaded"
 
 	def load_images(self, filenames, images_per_category, num_categories):
@@ -54,8 +53,8 @@ class ImageLoader(object):
 			for imageindex in images_to_pick:
 				imagename = category[imageindex]
 				index_in_dataset = i*images_per_category + count
-				images[index_in_dataset][:][:][:] = transform.resize(io.imread(
-					os.path.join(self.folderpath, 'images', imagename + '.jpg')), (320, 320), mode='reflect')
+				images[index_in_dataset][:][:][:] = img_as_ubyte(transform.resize(io.imread(
+					os.path.join(self.folderpath, 'images', imagename + '.jpg')), (320, 320), mode='reflect'))
 				labels[index_in_dataset] = i
 				count = count + 1
 		return (images, labels)
