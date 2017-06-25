@@ -23,7 +23,7 @@ class SURFExtractor(object):
 			(kps, surf_descriptors) = surf.compute(image_list[i][:][:][:], self.keypoints)
 
 			if self.surf_features is None:
-				self.surf_features = np.zeros((image_list.shape[0], gray.shape[0]/step_size, gray.shape[1]/step_size, surf_descriptors.shape[1]), dtype=np.float32)
+				self.surf_features = np.zeros((image_list.shape[0], gray.shape[0]/step_size, gray.shape[1]/step_size, surf_descriptors.shape[1]))
 
 			for j, kp in enumerate(kps):
 				self.surf_features[i][int(kp.pt[0]/step_size)][int(kp.pt[1]/step_size)][:] = surf_descriptors[j][:]
@@ -40,12 +40,11 @@ class HOGExtractor(object):
 		for i in range(image_list.shape[0]):
 			grayscale_image = color.rgb2gray(image_list[i])
 			hog_feature_array = hog(grayscale_image, block_norm='L2-Hys')
-			print(hog_feature_array.shape)
 
 			if self.hog_features is None:
-				self.hog_features = np.zeros((image_list.shape[0], hog_feature_array.shape[0], hog_feature_array.shape[1], hog_feature_array.shape[2]), dtype=np.float32)
+				self.hog_features = np.zeros((image_list.shape[0], hog_feature_array.shape[0]))
 
-			self.hog_features[i][:][:][:] = hog_feature_array
+			self.hog_features[i][:] = np.flatten(hog_feature_array)
 
 	def get_features(self):
 		return self.hog_features
