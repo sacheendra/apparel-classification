@@ -23,7 +23,7 @@ def main():
 		quantized_surf = loader.load_data('quantized-surf-features.npy')
 	else:
 		print('extracting quantized SURF features for training data')
-		quantized_surf = VectorQuantizer(reshaped_surf_features, num_centroids=1024).get_features()
+		quantized_surf = VectorQuantizer(reshaped_surf_features, num_centroids=128).get_features()
 		loader.store_data(quantized_surf, 'quantized-surf-features.npy')
 
 	original_shape_quantized_surf = np.reshape(quantized_surf, surf_features.shape[:-1])
@@ -43,7 +43,7 @@ def main():
 		quantized_hog = loader.load_data('quantized-hog-features.npy')
 	else:
 		print('extracting quantized HOG features for training data')
-		quantized_hog = VectorQuantizer(reshaped_hog_features, num_centroids=1024).get_features()
+		quantized_hog = VectorQuantizer(reshaped_hog_features, num_centroids=128).get_features()
 		loader.store_data(quantized_hog, 'quantized-hog-features.npy')
 
 	original_shape_quantized_hog = np.reshape(quantized_hog, hog_features.shape)
