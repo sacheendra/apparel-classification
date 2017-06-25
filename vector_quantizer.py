@@ -9,7 +9,7 @@ class VectorQuantizer(object):
 	def __init__(self, imagelist, num_centroids=128):
 		super(VectorQuantizer, self).__init__()
 		whitened = vq.whiten(imagelist)
-		(codebook, _) = vq.kmeans(whitened, num_centroids)
+		(codebook, _) = vq.kmeans2(whitened, num_centroids, iter=1000)
 		self.encoded_features = vq.vq(whitened, codebook)
 
 	def get_features(self):
