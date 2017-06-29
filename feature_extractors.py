@@ -37,18 +37,18 @@ class SURFExtractor(object):
 
 class HOGExtractor(object):
 	"""get HOG features"""
-	def __init__(self, image_list):
+	def __init__(self, image_list, pixels_per_cell=16, cells_per_block=3):
 		super(HOGExtractor, self).__init__()
 
 		self.hog_features = None
 		for i in range(image_list.shape[0]):
 			grayscale_image = color.rgb2gray(image_list[i])
-			hog_feature_array = hog(grayscale_image, block_norm='L2-Hys')
+			hog_feature_array = hog(grayscale_image, block_norm='L2-Hys', pixels_per_cell=(pixels_per_cell, pixels_per_cell), cells_per_block=(cells_per_block, cells_per_block))
 
 			if self.hog_features is None:
 				self.hog_features = np.zeros((image_list.shape[0], hog_feature_array.shape[0]))
 
-			self.hog_features[i][:] = np.flatten(hog_feature_array)
+			self.hog_features[i][:] = np.ndarray.flatten(hog_feature_array)
 
 	def get_features(self):
 		return self.hog_features
