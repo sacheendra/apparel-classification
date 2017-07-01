@@ -69,7 +69,7 @@ def spm_tri_level(train_matrix, num_centroids):
 
 def main():
 	potential_step_size = [40]
-	potential_num_centroids = [8]
+	potential_num_centroids = [32]
 
 	for i in range(len(potential_step_size)):
 		for j in range(len(potential_num_centroids)):

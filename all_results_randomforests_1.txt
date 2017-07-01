@@ -1,0 +1,136 @@
+partial test data loaded from numpy file
+partial train data loaded from numpy file
+just SURF
+extracting SURF features for train_16_80
+extracting SURF features for test_16_80
+for step size = 80 and #(centroids) = 16, the average accuracy = 0.12
+extracting SURF features for train_16_40
+extracting SURF features for test_16_40
+for step size = 40 and #(centroids) = 16, the average accuracy = 0.0733333333333
+extracting SURF features for train_16_20
+extracting SURF features for test_16_20
+for step size = 20 and #(centroids) = 16, the average accuracy = 0.1
+SURF with kmeans
+loading SURF features for train_16_80 from numpy file
+extracting quantized SURF features for train_16_80
+loading SURF features for test_16_80 from numpy file
+extracting quantized SURF features for test_16_80
+for step size = 80 and #(centroids) = 16, the average accuracy = 0.113333333333
+extracting SURF features for train_32_80
+extracting quantized SURF features for train_32_80
+extracting SURF features for test_32_80
+extracting quantized SURF features for test_32_80
+for step size = 80 and #(centroids) = 32, the average accuracy = 0.0666666666667
+extracting SURF features for train_64_80
+extracting quantized SURF features for train_64_80
+extracting SURF features for test_64_80
+extracting quantized SURF features for test_64_80
+for step size = 80 and #(centroids) = 64, the average accuracy = 0.0733333333333
+extracting SURF features for train_128_80
+extracting quantized SURF features for train_128_80
+extracting SURF features for test_128_80
+extracting quantized SURF features for test_128_80
+for step size = 80 and #(centroids) = 128, the average accuracy = 0.0666666666667
+loading SURF features for train_16_40 from numpy file
+extracting quantized SURF features for train_16_40
+loading SURF features for test_16_40 from numpy file
+extracting quantized SURF features for test_16_40
+for step size = 40 and #(centroids) = 16, the average accuracy = 0.0533333333333
+extracting SURF features for train_32_40
+extracting quantized SURF features for train_32_40
+extracting SURF features for test_32_40
+extracting quantized SURF features for test_32_40
+for step size = 40 and #(centroids) = 32, the average accuracy = 0.113333333333
+extracting SURF features for train_64_40
+extracting quantized SURF features for train_64_40
+extracting SURF features for test_64_40
+extracting quantized SURF features for test_64_40
+for step size = 40 and #(centroids) = 64, the average accuracy = 0.08
+extracting SURF features for train_128_40
+extracting quantized SURF features for train_128_40
+extracting SURF features for test_128_40
+extracting quantized SURF features for test_128_40
+for step size = 40 and #(centroids) = 128, the average accuracy = 0.04
+loading SURF features for train_16_20 from numpy file
+extracting quantized SURF features for train_16_20
+loading SURF features for test_16_20 from numpy file
+extracting quantized SURF features for test_16_20
+for step size = 20 and #(centroids) = 16, the average accuracy = 0.0666666666667
+extracting SURF features for train_32_20
+extracting quantized SURF features for train_32_20
+extracting SURF features for test_32_20
+extracting quantized SURF features for test_32_20
+for step size = 20 and #(centroids) = 32, the average accuracy = 0.0466666666667
+extracting SURF features for train_64_20
+extracting quantized SURF features for train_64_20
+extracting SURF features for test_64_20
+extracting quantized SURF features for test_64_20
+for step size = 20 and #(centroids) = 64, the average accuracy = 0.06
+extracting SURF features for train_128_20
+extracting quantized SURF features for train_128_20
+extracting SURF features for test_128_20
+extracting quantized SURF features for test_128_20
+/Users/sacheendra/anaconda/envs/multimedia_search/lib/python2.7/site-packages/scipy/cluster/vq.py:660: UserWarning: One of the clusters is empty. Re-run kmean with a different initialization.
+  warnings.warn("One of the clusters is empty. "
+for step size = 20 and #(centroids) = 128, the average accuracy = 0.06
+SURF with histograms
+loading SURF features for train_16_80 from numpy file
+loading quantized SURF features for train_16_80 from numpy file
+loading SURF features for test_16_80 from numpy file
+loading quantized SURF features for test_16_80 from numpy file
+for step size = 80 and #(centroids) = 16, the average accuracy = 0.0666666666667
+loading SURF features for train_32_80 from numpy file
+loading quantized SURF features for train_32_80 from numpy file
+loading SURF features for test_32_80 from numpy file
+loading quantized SURF features for test_32_80 from numpy file
+for step size = 80 and #(centroids) = 32, the average accuracy = 0.06
+loading SURF features for train_64_80 from numpy file
+loading quantized SURF features for train_64_80 from numpy file
+loading SURF features for test_64_80 from numpy file
+loading quantized SURF features for test_64_80 from numpy file
+for step size = 80 and #(centroids) = 64, the average accuracy = 0.08
+loading SURF features for train_128_80 from numpy file
+loading quantized SURF features for train_128_80 from numpy file
+loading SURF features for test_128_80 from numpy file
+loading quantized SURF features for test_128_80 from numpy file
+for step size = 80 and #(centroids) = 128, the average accuracy = 0.0933333333333
+loading SURF features for train_16_40 from numpy file
+loading quantized SURF features for train_16_40 from numpy file
+loading SURF features for test_16_40 from numpy file
+loading quantized SURF features for test_16_40 from numpy file
+for step size = 40 and #(centroids) = 16, the average accuracy = 0.106666666667
+loading SURF features for train_32_40 from numpy file
+loading quantized SURF features for train_32_40 from numpy file
+loading SURF features for test_32_40 from numpy file
+loading quantized SURF features for test_32_40 from numpy file
+for step size = 40 and #(centroids) = 32, the average accuracy = 0.0666666666667
+loading SURF features for train_64_40 from numpy file
+loading quantized SURF features for train_64_40 from numpy file
+loading SURF features for test_64_40 from numpy file
+loading quantized SURF features for test_64_40 from numpy file
+for step size = 40 and #(centroids) = 64, the average accuracy = 0.06
+loading SURF features for train_128_40 from numpy file
+loading quantized SURF features for train_128_40 from numpy file
+loading SURF features for test_128_40 from numpy file
+loading quantized SURF features for test_128_40 from numpy file
+for step size = 40 and #(centroids) = 128, the average accuracy = 0.06
+loading SURF features for train_16_20 from numpy file
+loading quantized SURF features for train_16_20 from numpy file
+loading SURF features for test_16_20 from numpy file
+loading quantized SURF features for test_16_20 from numpy file
+for step size = 20 and #(centroids) = 16, the average accuracy = 0.08
+loading SURF features for train_32_20 from numpy file
+loading quantized SURF features for train_32_20 from numpy file
+loading SURF features for test_32_20 from numpy file
+loading quantized SURF features for test_32_20 from numpy file
+for step size = 20 and #(centroids) = 32, the average accuracy = 0.0466666666667
+loading SURF features for train_64_20 from numpy file
+loading quantized SURF features for train_64_20 from numpy file
+loading SURF features for test_64_20 from numpy file
+loading quantized SURF features for test_64_20 from numpy file
+for step size = 20 and #(centroids) = 64, the average accuracy = 0.04
+loading SURF features for train_128_20 from numpy file
+loading quantized SURF features for train_128_20 from numpy file
+loading SURF features for test_128_20 from numpy file
+loading quantized SURF features for test_128_20 from numpy file
+for step size = 20 and #(centroids) = 128, the average accuracy = 0.0733333333333
