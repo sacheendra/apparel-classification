@@ -63,7 +63,7 @@ class ImageLoader(object):
 			if label < num_categories:
 				filenames_by_category[label].append(imagename)
 
-		images = np.zeros((images_per_category * num_categories, 256, 256, 3), dtype=np.uint8)
+		images = np.zeros((images_per_category * num_categories, 320, 320, 3), dtype=np.uint8)
 		labels = np.zeros(images_per_category * num_categories, dtype=np.uint8)
 
 		for i, category in enumerate(filenames_by_category):
@@ -73,7 +73,7 @@ class ImageLoader(object):
 				imagename = category[imageindex]
 				index_in_dataset = i*images_per_category + count
 				images[index_in_dataset][:][:][:] = img_as_ubyte(transform.resize(io.imread(
-					os.path.join(self.folderpath, 'images', imagename + '.jpg')), (256, 256), mode='reflect'))
+					os.path.join(self.folderpath, 'images', imagename + '.jpg')), (320, 320), mode='reflect'))
 				labels[index_in_dataset] = i
 				count = count + 1
 		return (images, labels)

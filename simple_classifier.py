@@ -127,7 +127,8 @@ def main():
 	test_data = loader.get_test_data()
 	test_labels = loader.get_test_labels()
 
-	potential_step_size = [64, 32, 16]
+	# potential_step_size = [64, 32, 16]
+	potential_step_size = [80, 40, 20]
 	potential_num_centroids = [16, 32, 64, 128]
 	# potential_step_size = [20]
 	# potential_num_centroids = [32]
@@ -164,8 +165,8 @@ def main():
 			for x in xrange(50):
 				clf = RandomForestClassifier(n_jobs=2)
 				# clf = SVC()
-				clf.fit(train_features, train_labels)
-				accuracy = (accuracy*x + clf.score(test_features, test_labels))/(x+1)
+				clf.fit(reshaped_train_features, train_labels)
+				accuracy = (accuracy*x + clf.score(reshaped_test_features, test_labels))/(x+1)
 			print "for step size = {0} and #(centroids) = {1}, the average accuracy = {2}".format(potential_step_size[i], potential_num_centroids[j], accuracy)
 
 
@@ -181,8 +182,8 @@ def main():
 			for x in xrange(50):
 				clf = RandomForestClassifier(n_jobs=2)
 				# clf = SVC()
-				clf.fit(train_features, train_labels)
-				accuracy = (accuracy*x + clf.score(test_features, test_labels))/(x+1)
+				clf.fit(train_histogram, train_labels)
+				accuracy = (accuracy*x + clf.score(test_histogram, test_labels))/(x+1)
 			print "for step size = {0} and #(centroids) = {1}, the average accuracy = {2}".format(potential_step_size[i], potential_num_centroids[j], accuracy)
 
 	# potential_pixels_per_cell = [16, 8]
